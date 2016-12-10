@@ -15,7 +15,7 @@ LOWERAPP=${APP,,}
 apt-get update
 apt-get install -y wget curl make libx11-dev git
 
-curl -sL https://deb.nodesource.com/setup_7.x | bash -
+curl -sL https://deb.nodesource.com/setup_6.x | bash -
 apt-get install -y nodejs
 
 npm install -g gulp
@@ -32,6 +32,9 @@ cd vscode
 
 scripts/npm.sh install
 node --max_old_space_size=2048 /usr/bin/gulp vscode-linux-x64
+
+cd ..
+cp -r VSCode-linux-x64/* /AppDir/usr/bin
 
 cd /AppDir
 wget -q https://github.com/fusion809/AppImages/raw/master/functions.sh -O ./functions.sh
