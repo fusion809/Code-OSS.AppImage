@@ -13,14 +13,14 @@ APP=code-oss
 LOWERAPP=${APP,,}
 
 apt-get update
-apt-get install -y wget curl make libx11-dev git
+apt-get install -y wget curl build-essential libx11-dev git
 
 curl -sL https://deb.nodesource.com/setup_6.x | bash -
 apt-get install -y nodejs
 
 npm install -g gulp
 
-CODE_VERSION=$(wget -cq https://github.com/Microsoft/vscode/releases -O - | grep ".tar.gz" | head -n 5 | cut -d '"' -f 2 | cut -d '/' -f 5 | sed 's|.tar.gz||g' | grep "[0-9]")
+CODE_VERSION=$(wget -cq https://github.com/Microsoft/vscode/releases -O - | grep ".tar.gz" | head -n 50 | cut -d '"' -f 2 | cut -d '/' -f 5 | sed 's|.tar.gz||g' | grep "[0-9]" | sort -u | tail -n 1)
 printf "VERSION is $CODE_VERSION\n"
 
 wget -cqO- https://github.com/Microsoft/vscode/archive/${CODE_VERSION}.tar.gz | tar xz --transform="s/vscode-${CODE_VERSION}/vscode/"
