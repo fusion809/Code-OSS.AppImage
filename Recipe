@@ -23,7 +23,7 @@ npm install -g gulp
 CODE_VERSION=$(wget -cq https://github.com/Microsoft/vscode/releases -O - | grep ".tar.gz" | head -n 5 | cut -d '"' -f 2 | cut -d '/' -f 5 | sed 's|.tar.gz||g' | grep "[0-9]")
 printf "VERSION is $CODE_VERSION\n"
 
-wget -cqO- https://github.com/Microsoft/vscode/archive/$CODE_VERSION.tar.gz | tar xz --transform="s/vscode-${VSCODE_VERSION}/vscode/"
+wget -cqO- https://github.com/Microsoft/vscode/archive/${CODE_VERSION}.tar.gz | tar xz --transform="s/vscode-${CODE_VERSION}/vscode/"
 if [[ -d /AppDir ]]; then
   rm -rf /AppDir
 fi
