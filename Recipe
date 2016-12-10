@@ -18,7 +18,7 @@ apt-get install -y wget curl build-essential libx11-dev git
 curl -sL https://deb.nodesource.com/setup_7.x | bash -
 apt-get install -y nodejs
 
-npm install -g gulp
+npm install -g gulp node-gyp
 
 CODE_VERSION=$(wget -cq https://github.com/Microsoft/vscode/releases -O - | grep ".tar.gz" | head -n 50 | cut -d '"' -f 2 | cut -d '/' -f 5 | sed 's|.tar.gz||g' | grep "[0-9]" | sort -u | tail -n 1)
 printf "VERSION is $CODE_VERSION\n"
