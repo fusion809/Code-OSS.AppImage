@@ -15,7 +15,7 @@ LOWERAPP=${APP,,}
 apt-get update
 apt-get install -y wget curl build-essential libx11-dev git
 
-curl -sL https://deb.nodesource.com/setup_6.x | bash -
+curl -sL https://deb.nodesource.com/setup_7.x | bash -
 apt-get install -y nodejs
 
 npm install -g gulp
