@@ -1,0 +1,43 @@
+sudo: required
+dist: precise
+addons:
+  apt:
+    packages:
+    - bsdtar
+    - curl
+    - zsync
+    - squashfs-tools
+services:
+- docker
+
+script:
+- bash -e travis.sh
+- FILES=$(find /out/ -name "*.AppImage")
+
+notifications:
+  email:
+    address:
+      - "brentonhorne77@gmail.com"
+    on_success: never  # options: [always|never|change] default: always
+    on_failure: never  # options: [always|never|change] default: always
+    on_start: never     # options: [always|never|change] default: always
+    template:
+      - "%{repository} build %{build_number}: %{result} %{build_url}"
+    use_notice: true
+    # skip_join: true
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/4bf20518805a55998cc2
+    on_success: always  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: always     # options: [always|never|change] default: always
+
+after_success:
+  - ls -lh /out/*
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+  - bash ./upload.sh /out/*
+
+branches:
+  except:
+    - # Do not build tags that we create when we upload to GitHub Releases
+    - /^(?i:continuous)$/

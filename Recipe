@@ -1,0 +1,108 @@
+#!/bin/bash
+
+########################################################################
+# Package the baries built on Travis-CI as an AppImage
+# By Simon Peter 2016
+# For more information, see http://appimage.org/
+########################################################################
+
+export ARCH="$(uname -m)"
+
+LOC="$PWD"
+APP=code-oss
+LOWERAPP=${APP,,}
+
+apt-get update
+apt-get install -y wget curl make libx11-dev git
+
+curl -sL https://deb.nodesource.com/setup_7.x | bash -
+apt-get install -y nodejs
+
+npm install -g gulp
+
+CODE_VERSION=$(wget -cq https://github.com/Microsoft/vscode/releases -O - | grep ".tar.gz" | head -n 5 | cut -d '"' -f 2 | cut -d '/' -f 5 | sed 's|.tar.gz||g' | grep "[0-9]")
+printf "VERSION is $CODE_VERSION\n"
+
+wget -cqO- https://github.com/Microsoft/vscode/archive/$CODE_VERSION.tar.gz | tar xz --transform="s/vscode-${VSCODE_VERSION}/vscode/"
+if [[ -d /AppDir ]]; then
+  rm -rf /AppDir
+fi
+mkdir -p /AppDir/usr
+cd vscode
+
+scripts/npm.sh install
+node --max_old_space_size=2048 /usr/bin/gulp vscode-linux-x64
+
+cd /AppDir
+wget -q https://github.com/fusion809/AppImages/raw/master/functions.sh -O ./functions.sh
+chmod +x ./functions.sh
+. ./functions.sh
+rm functions.sh
+
+# install additional dependencies for python
+#URL=$(apt-get install -qq --yes --no-download --reinstall --print-uris libpython2.7 libpython3.2 libperl5.14 liblua5.1-0 libruby1.9.1| cut -d' ' -f1 | tr -d "'")
+#URL=$(apt-get install -qq --yes --no-download --reinstall --print-uris libpython3.2 | cut -d' ' -f1 | tr -d "'")
+#wget -c $URL
+#for package in *.deb; do
+#    dpkg -x $package .
+#done
+#rm -f *.deb
+
+
+########################################################################
+# Copy desktop and icon file to AppDir for AppRun to pick them up
+########################################################################
+
+get_apprun
+
+get_desktop
+
+mkdir -p ./usr/lib/x86_64-linux-gnu
+
+# copy dependencies
+copy_deps
+
+# Move the libraries to usr/bin
+move_lib
+
+########################################################################
+# Delete stuff that should not go into the AppImage
+########################################################################
+
+# if those libraries are present, there will be a pango problem
+find . -name "libpango*" -delete
+find . -name "libfreetype*" -delete
+find . -name "libX*" -delete
+
+# Delete dangerous libraries; see
+# https://github.com/probonopd/AppImages/blob/master/excludelist
+delete_blacklisted
+
+########################################################################
+# desktopintegration asks the user on first run to install a menu item
+########################################################################
+
+get_desktopintegration "$LOWERAPP"
+
+cd ..
+
+# Package as AppImage
+GLIBC_NEEDED=$(find . -type f -executable -exec strings {} \; | grep ^GLIBC_2 | sed s/GLIBC_//g | sort --version-sort | uniq | tail -n 1)
+VERSION=${CODE_VERSION}.glibc$GLIBC_NEEDED
+echo "VERSION is $VERSION"
+
+ARCH=$(uname -m)
+if [[ "$ARCH" = "x86_64" ]] ; then
+	APPIMAGE=$APP"-"$VERSION"-x86_64.AppImage"
+fi
+if [[ "$ARCH" = "i686" ]] ; then
+	APPIMAGE=$APP"-"$VERSION"-i386.AppImage"
+fi
+
+mkdir -p /out
+
+rm -f /out/*.AppImage || true
+
+curl -sL "https://github.com/probonopd/AppImageKit/releases/download/6/AppImageAssistant_6-x86_64.AppImage" > AppImageAssistant
+chmod a+x AppImageAssistant
+./AppImageAssistant ./AppDir/ /out/$APP"-"$VERSION"-"$ARCH".AppImage"
