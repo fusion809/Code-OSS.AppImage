@@ -79,10 +79,15 @@ rm functions.sh
 wget -c https://github.com/fusion809/Code-OSS.AppImage/raw/master/AppRun
 chmod +x AppRun
 
-mkdir -p ./usr/lib/x86_64-linux-gnu
-cp /usr/lib/x86_64-linux-gnu/libXss.so ./usr/lib/x86_64-linux-gnu/
-cp /usr/lib/x86_64-linux-gnu/libXss.so.1 ./usr/lib/x86_64-linux-gnu/
-cp /usr/lib/x86_64-linux-gnu/libXss.so.1.0.0 ./usr/lib/x86_64-linux-gnu/
+cd ..
+URLS=$(apt-get -y install --print-uris --reinstall libxss1 | cut -d "'" -f 2 | grep -e "^http")
+for URL in $URLS ; do
+  if [ ! -f $(basename "$URL") ] ; then
+    wget -c $URL
+  fi
+done
+cd -
+find ../*.deb -exec dpkg -x {} . \; || true
 
 # copy dependencies
 copy_deps
