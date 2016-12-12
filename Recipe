@@ -60,10 +60,10 @@ find . \
   -or -name "*akefile*" -exec rm {} \; \
   -or -name "*.md" -exec rm {} \; \
   -or -name "*.markdown" -exec rm {} \; \
-  -or -name "test" -type d -exec rm -r "{}" \; \
-  -or -name "examples" -type d -exec rm -r "{}" \; \
-  -or -name "demo" -type d -exec rm -r "{}" \; \
-  -or -name "doc*" -type d -exec rm -r "{}" \; \
+  -or -name "test" -type d -delete \
+  -or -name "examples" -type d -delete \
+  -or -name "demo" -type d -delete \
+  -or -name "doc*" -type d -delete \
   -or -name "*.c" -exec rm {} \; \
   -or -name "*.h" -exec rm {} \; \
   -or -name "*.html" -exec rm {} \;
