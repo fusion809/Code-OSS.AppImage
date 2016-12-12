@@ -2,7 +2,7 @@
 
 ########################################################################
 # Package the baries built on Travis-CI as an AppImage
-# By Simon Peter 2016
+# By Brenton Horne 2016
 # For more information, see http://appimage.org/
 ########################################################################
 
