@@ -30,7 +30,7 @@ fi
 mkdir -p /AppDir/usr
 cd vscode
 
-scripts/npm.sh install
+scripts/npm.sh install --unsafe-perm
 node --max_old_space_size=2048 /usr/bin/gulp vscode-linux-x64
 
 cd ..
