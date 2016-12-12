@@ -53,21 +53,6 @@ cd /AppDir
 mv usr/bin/resources/app/resources/linux/code.png code-oss.png
 rm -rf ./usr/bin/resources/app/resources
 
-# Remove unneeded files
-find . \
-  -name "LICENSE*" -exec rm {} \; \
-  -or -name "*.txt" -exec rm {} \; \
-  -or -name "*akefile*" -exec rm {} \; \
-  -or -name "*.md" -exec rm {} \; \
-  -or -name "*.markdown" -exec rm {} \; \
-  -or -name "test" -type d -exec rm -r {} + \
-  -or -name "examples" -type d -exec rm -r {} + \
-  -or -name "demo" -type d -exec rm -r {} + \
-  -or -name "doc*" -type d -exec rm -r {} + \
-  -or -name "*.c" -exec rm {} \; \
-  -or -name "*.h" -exec rm {} \; \
-  -or -name "*.html" -exec rm {} \;
-
 # Create desktop config file
 cat > code-oss.desktop <<EOF
 [Desktop Entry]
