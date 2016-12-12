@@ -80,6 +80,7 @@ wget -c https://github.com/fusion809/Code-OSS.AppImage/raw/master/AppRun
 chmod +x AppRun
 
 mkdir -p ./usr/lib/x86_64-linux-gnu
+cp /usr/lib/x86_64-linux-gnu/libXss* ./usr/lib/x86_64-linux-gnu/libXss*
 
 # copy dependencies
 copy_deps
