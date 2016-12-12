@@ -34,8 +34,9 @@ patch -Np1 -i <(wget -cqO- https://github.com/fusion809/code-oss/raw/master/prod
 scripts/npm.sh install --unsafe-perm
 node --max_old_space_size=2048 /usr/bin/gulp vscode-linux-x64
 
+cd ..
+cp -r VSCode-linux-x64/* /AppDir/usr/bin
 cd /AppDir
-cp -r ../VSCode-linux-x64/* usr/bin
 mv usr/bin/resources/app/resources/linux/code.png code-oss.png
 cat > code-oss.desktop <<EOF
 [Desktop Entry]
