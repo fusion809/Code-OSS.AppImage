@@ -36,7 +36,6 @@ node --max_old_space_size=2048 /usr/bin/gulp vscode-linux-x64
 
 cd /AppDir
 cp -r ../VSCode-linux-x64/* usr/bin
-
 mv usr/bin/resources/app/resources/linux/code.png code-oss.png
 cat > code-oss.desktop <<EOF
 [Desktop Entry]
@@ -59,14 +58,7 @@ rm functions.sh
 # Copy desktop and icon file to AppDir for AppRun to pick them up
 ########################################################################
 
-cat > AppRun <<EOF
-#!/bin/bash
-HERE="$(dirname "$(readlink -f "${0}")")"
-export LD_LIBRARY_PATH=${HERE}/usr/lib/x86_64-linux-gnu/:$HERE/lib/x86_64-linux-gnu/:$HERE/usr/lib/:${HERE}/lib/:$LD_LIBRARY_PATH
-export PATH=${HERE}/usr/sbin:${HERE}/usr/bin:$PATH
-"${HERE}"/usr/bin/code-oss.wrapper "$@"
-EOF
-
+wget -c https://github.com/fusion809/Code-OSS.AppImage/raw/master/AppRun
 chmod +x AppRun
 
 mkdir -p ./usr/lib/x86_64-linux-gnu
@@ -95,6 +87,8 @@ delete_blacklisted
 ########################################################################
 
 get_desktopintegration "$LOWERAPP"
+
+rm -rf AppDir
 
 # Package as AppImage
 GLIBC_NEEDED=$(find . -type f -executable -exec strings {} \; | grep ^GLIBC_2 | sed s/GLIBC_//g | sort --version-sort | uniq | tail -n 1)
