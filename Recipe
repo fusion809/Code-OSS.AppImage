@@ -102,7 +102,6 @@ move_lib
 # if those libraries are present, there will be a pango problem
 find . -name "libpango*" -delete
 find . -name "libfreetype*" -delete
-find . -name "libX*" -delete
 
 # Delete dangerous libraries; see
 # https://github.com/fusion809/AppImages/blob/master/excludelist
