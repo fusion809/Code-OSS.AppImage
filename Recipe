@@ -27,7 +27,7 @@ wget -cqO- https://github.com/Microsoft/vscode/archive/${CODE_VERSION}.tar.gz | 
 if [[ -d /AppDir ]]; then
   rm -rf /AppDir
 fi
-mkdir -p /AppDir/usr
+mkdir -p /AppDir/usr/bin
 cd vscode
 
 scripts/npm.sh install --unsafe-perm
