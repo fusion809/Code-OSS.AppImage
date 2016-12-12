@@ -67,6 +67,8 @@ mkdir -p ./usr/lib/x86_64-linux-gnu
 # copy dependencies
 copy_deps
 
+cp /usr/lib/x86_64-linux-gnu/libgssapi_krb5.so.2* ./usr/lib/x86_64-linux-gnu
+
 # Move the libraries to usr/bin
 move_lib
 
