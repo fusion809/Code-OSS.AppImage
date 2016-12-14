@@ -11,7 +11,7 @@ FILE="$1"
 
 [ -f "$FILE" ] || { echo "File '$FILE' doesn't exist"; exit; }
 
-PCK_NAME="$(basename "$1")"
+PCK_NAME=code-oss
 BINTRAY_USER="${BINTRAY_USER:-fusion809}"
 BINTRAY_API_KEY="$BINTRAY_API_KEY" # env
 BINTRAY_REPO="${BINTRAY_REPO:-AppImages}"

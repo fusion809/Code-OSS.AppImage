@@ -14,6 +14,7 @@ services:
 script:
 - bash -e travis.sh
 - FILES=$(find /out/ -name "*.AppImage")
+- bash -e bintray.sh $FILES
 
 notifications:
   email:
@@ -33,10 +34,10 @@ notifications:
     on_failure: always  # options: [always|never|change] default: always
     on_start: always     # options: [always|never|change] default: always
 
-after_success:
-  - ls -lh /out/*
-  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
-  - bash ./upload.sh /out/*
+#after_success:
+#  - ls -lh /out/*
+#  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+#  - bash ./upload.sh /out/*
 
 branches:
   except:
