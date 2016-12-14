@@ -13,6 +13,7 @@ services:
 
 script:
 - bash -e travis.sh
+- cp bintray.sh /out
 - cd /out
 - FILES=$(find . -name "*.AppImage")
 - bash -e bintray.sh $FILES
