@@ -13,10 +13,10 @@ services:
 
 script:
 - bash -e travis.sh
-- cp bintray.sh /out
+- sudo cp bintray.sh /out
 - cd /out
-- FILES=$(find . -name "*.AppImage")
-- bash -e bintray.sh $FILES
+- FILES=$(sudo find . -name "*.AppImage")
+- sudo bash -e bintray.sh $FILES
 
 notifications:
   email:
