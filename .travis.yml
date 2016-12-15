@@ -13,7 +13,7 @@ services:
 
 script:
 - bash -e travis.sh
-- sudo cp bintray.sh /out
+- sudo cp bintray*.sh /out
 - cd /out
 - FILES=$(sudo find . -name "*.AppImage")
 - sudo bash -e bintray.sh $FILES
