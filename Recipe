@@ -23,7 +23,9 @@ apt-get install -y nodejs
 npm install -g gulp
 
 # VSCode version
-CODE_VERSION=$(wget -cq https://github.com/Microsoft/vscode/releases -O - | grep ".tar.gz" | head -n 50 | cut -d '"' -f 2 | cut -d '/' -f 5 | sed 's|.tar.gz||g' | grep "[0-9]" | sort -u | tail -n 1)
+# The following line doesn't work for VSCode >= 1.10.0
+#CODE_VERSION=$(wget -cq https://github.com/Microsoft/vscode/releases -O - | grep ".tar.gz" | head -n 50 | cut -d '"' -f 2 | cut -d '/' -f 5 | sed 's|.tar.gz||g' | grep "[0-9]" | sort -u | tail -n 1)
+CODE_VERSION="1.10.1"
 #CODE_VERSION="1.8.0"
 #_gitcommit=38746938a4ab94f2f57d9e1309c51fd6fb37553d
 printf "VERSION is $CODE_VERSION\n"
